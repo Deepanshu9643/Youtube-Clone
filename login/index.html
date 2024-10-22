@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form | Youtube Cloning</title>
+  <link rel="stylesheet" href="style.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Login form with input fields and icons -->
+    <form class="login-form">
+      <h1>Login</h1>
+      <div class="input-box">
+        <input type="email" id="email" placeholder="Enter Your Email" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Enter Your Password" required>
+        <i class='bx bxs-lock-alt'></i>
+      </div>
+      <div class="remember-forgot">
+        <label><input type="checkbox">Remember Me</label>
+        <a href="#">Forgot Password</a>
+      </div>
+      <button type="submit" class="btn">Login</button>
+      <div class="register-link">
+        <p>Don't have an account? <a href="http://127.0.0.1:5500/signup/signup.html">Register here</a></p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    let form = document.querySelector('.login-form');
+    let email_box = document.querySelector('#email');
+    let password_box = document.querySelector('#password');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        let email = email_box.value;
+        let password = password_box.value;
+
+        if (!email || !password) {
+            alert("All fields are required");
+            return;
+        }
+        if (password.length < 6) {
+            alert('Password should be at least 6 characters long');
+            return;
+        }
+
+        let login_data = {
+            email, 
+            password
+        };
+
+        fetch("https://instagram-express-app.vercel.app/api/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(login_data)
+        })
+        .then(response => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert("Login Successful");
+                // Redirect to dashboard or main page after login
+                window.location.href = "http://127.0.0.1:5500/youtube/index.html";
+            } else {
+                alert("Invalid Email or Password. Redirecting to signup...");
+                // Redirect to signup page if login fails
+                window.location.href = "http://127.0.0.1:5501/signup.html";
+            }
+        })
+        .catch((error) => {console.log(error)});
+    });
+  </script>
+</body>
+</html>

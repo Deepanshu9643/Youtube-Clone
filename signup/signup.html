@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup Form | Youtube Cloning</title>
+  <link rel="stylesheet" href="signupstyle.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Signup form with input fields for name, email, password, and confirm password -->
+    <form class="signup-form">
+      <h1>Signup</h1>
+      <div class="input-box">
+        <input type="text" id="name" placeholder="Enter Your Name" required>
+        <i class='bx bxs-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="email" id="email" placeholder="Enter Your Email" required>
+        <i class='bx bxs-envelope'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="password" placeholder="Enter Your Password" required>
+        <i class='bx bxs-lock-alt'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="confirm" placeholder="Confirm Your Password" required>
+        <i class='bx bxs-lock'></i>
+      </div>
+      <div>
+      <button  type="submit" class="btn">Signup</button>
+      <a href="http://127.0.0.1:5500/login/index.html" class="login">Login</a>
+    </div>
+    </form>
+  </div>
+
+  <script>
+    let form = document.querySelector('.signup-form');
+    let name_box = document.querySelector('#name');
+    let email_box = document.querySelector('#email');
+    let password_box = document.querySelector('#password');
+    let confirm_box = document.querySelector('#confirm');
+  
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+  
+        let name = name_box.value;
+        let email = email_box.value;
+        let password = password_box.value;
+        let confirm = confirm_box.value;
+  
+        if (!name || !email || !password || !confirm) {
+            alert("All fields are required");
+            return; 
+        }
+  
+        if (password !== confirm) {
+            alert('Passwords do not match');
+            return; 
+        }
+  
+        if (password.length < 6) {
+            alert('Password should be at least 6 characters long');
+            return; 
+        }
+  
+        let signup_data = {
+            name,
+            email, 
+            password
+        };
+  
+        fetch("https://instagram-express-app.vercel.app/api/auth/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(signup_data)
+        })
+        .then(response => response.json())
+        .then((data) => {
+            if (data.success) {
+                alert("Signup successful! Redirecting to login page...");
+                window.location.href = "http://127.0.0.1:5500/login/index.html";
+            } else if (data.message && data.message.includes("already exists")) {
+                alert("User already exists. Please log in on the login page.");
+            } else {
+                alert("Signup failed. Please try again.");
+            }
+  
+            name_box.value = "";
+            email_box.value = "";
+            password_box.value = "";
+            confirm_box.value = "";
+  
+        })
+        .catch((error) => { console.log(error) });
+    });
+  </script>
+  
+</body>
+</html>
