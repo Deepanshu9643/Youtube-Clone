@@ -72,15 +72,18 @@ nav{
     flex-wrap: wrap;
     gap: 30px;
     margin-top: 10px;
+    
 }
 
 .video {
     width: 270px;
     cursor: pointer;
+    
 }
 
 .video img {
     width: 100%;
+    border-radius: 10px;
 }
 
 .video p {
