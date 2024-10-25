@@ -26,7 +26,7 @@
       </div>
       <button type="submit" class="btn">Login</button>
       <div class="register-link">
-        <p>Don't have an account? <a href="http://127.0.0.1:5500/signup/signup.html">Register here</a></p>
+        <p>Don't have an account? <a href="http://127.0.0.1:5501/signup/signup.html">Register here</a></p>
       </div>
     </form>
   </div>
@@ -68,11 +68,11 @@
             if (data.success) {
                 alert("Login Successful");
                 // Redirect to dashboard or main page after login
-                window.location.href = "http://127.0.0.1:5500/youtube/index.html";
+                window.location.href = "http://127.0.0.1:5501/youtube/index.html";
             } else {
                 alert("Invalid Email or Password. Redirecting to signup...");
                 // Redirect to signup page if login fails
-                window.location.href = "http://127.0.0.1:5501/signup.html";
+                window.location.href = "http://127.0.0.1:5501/signup/signup.html";
             }
         })
         .catch((error) => {console.log(error)});
