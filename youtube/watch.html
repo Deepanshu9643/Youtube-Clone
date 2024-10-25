@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Video</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="video-container">
+        <iframe id="videoPlayer" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
+    <div class="video-details">
+        <h2 id="videoTitle"></h2>
+        <p id="videoDescription"></p>
+    </div>
+
+    
+
+    <!-- Container for video thumbnails -->
+    <div class="video-results">
+        <!-- Example video items -->
+        <div class="video">
+            <img src="https://via.placeholder.com/150" alt="Video 1" onclick="loadVideo('videoId1')">
+            <p>Video Title 1</p>
+        </div>
+        <div class="video">
+            <img src="https://via.placeholder.com/150" alt="Video 2" onclick="loadVideo('videoId2')">
+            <p>Video Title 2</p>
+        </div>
+        <div class="video">
+            <img src="https://via.placeholder.com/150" alt="Video 3" onclick="loadVideo('videoId3')">
+            <p>Video Title 3</p>
+        </div>
+        <div class="video">
+            <img src="https://via.placeholder.com/150" alt="Video 4" onclick="loadVideo('videoId4')">
+            <p>Video Title 4</p>
+        </div>
+        <div class="video">
+            <img src="https://via.placeholder.com/150" alt="Video 5" onclick="loadVideo('videoId5')">
+            <p>Video Title 5</p>
+        </div>
+        <div class="video">
+            <img src="https://via.placeholder.com/150" alt="Video 6" onclick="loadVideo('videoId6')">
+            <p>Video Title 6</p>
+        </div>
+        <!-- Add more video items as needed -->
+    </div>
+
+    <script>
+        // Load video data from localStorage
+        const videoData = JSON.parse(localStorage.getItem('currentVideo'));
+
+        if (videoData) {
+            // Set video ID in iframe URL
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = `https://www.youtube.com/embed/${videoData.id.videoId}?autoplay=1`;
+
+            // Set video title and description
+            document.getElementById('videoTitle').innerText = videoData.snippet.title;
+            document.getElementById('videoDescription').innerText = videoData.snippet.description;
+        } else {
+            document.body.innerHTML = "<h1>Video not found</h1>";
+        }
+
+        // Load the selected video into the player
+        function loadVideo(videoId) {
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            // Optionally, you can set the title and description dynamically as well
+        }
+    </script>
+</body>
+</html>
