@@ -1784,3 +1784,58 @@ function displayThumbnails(arr) {
     });
 }
 
+
+
+// Check if SpeechRecognition API is supported
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+
+if (recognition) {
+    recognition.continuous = false; // Stop after one phrase
+    recognition.interimResults = false; // Only final results
+    recognition.lang = 'en-US'; // Set language to English (US)
+}
+
+// Microphone icon
+let micIcon = document.querySelector('.mic_icon');
+let search_voice = document.querySelector('#search'); // Assuming the input field has this ID
+
+// Start listening when microphone icon is clicked
+micIcon.addEventListener('click', () => {
+    if (!recognition) {
+        alert("Your browser doesn't support speech recognition.");
+        return;
+    }
+    recognition.start();
+});
+
+// Process the result when speech is recognized
+recognition.addEventListener('result', (event) => {
+    const transcript = event.results[0][0].transcript;
+    search_voice.value = transcript; // Set the recognized text to the search voice input
+});
+
+// Handle errors
+recognition.addEventListener('error', (event) => {
+    console.error("Speech recognition error detected: " + event.error);
+});
+
+
+
+// Handle errors
+recognition.addEventListener('error', (event) => {
+    console.error("Speech recognition error detected: " + event.error);
+});
+micIcon.addEventListener('click', () => {
+    if (!recognition) {
+        alert("Your browser doesn't support speech recognition.");
+        return;
+    }
+    micIcon.classList.add('listening'); // Add effect
+    recognition.start();
+});
+
+recognition.addEventListener('end', () => {
+    micIcon.classList.remove('listening'); // Remove effect
+});
+

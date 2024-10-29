@@ -7,6 +7,7 @@
 }
 
 
+
 a {
     text-decoration: none;
     color: #5a5a5a;    
@@ -60,19 +61,21 @@ nav {
 .nav-middle .search_box {
     border: 1px solid #ccc;
     margin-right: 15px;
-    padding: 8px 12px;
+    padding: 4px 12px;
     border-radius: 25px;
 }
 
 .nav-middle .search_box input {
-    width: 400px;
+    width: 570px;
     border: 0;
     outline: 0;
     background: transparent;
+    font-size: medium;
 }
 
 .nav-middle .search_box img {
-    width: 15px;
+    width: 25px;
+    background-color: transparent;
 }
 
 /* Video Results Styles */
@@ -149,6 +152,7 @@ nav {
     margin-bottom: 20px;
     width: fit-content;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 .subcribed-list a img {
@@ -229,6 +233,43 @@ nav {
     margin-bottom: 5px;
 }
 
+
+.tab-container {
+    display: flex;
+    gap: 8px;
+    padding: 10px;
+    overflow-x: scroll; /* Enable horizontal scroll */
+    white-space: nowrap;
+    scrollbar-width: none; /* For Firefox to hide scrollbar */
+}
+
+.tab-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge to hide scrollbar */
+}
+
+.tab {
+    padding: 8px 16px;
+    background-color: #333; /* Dark background for tabs */
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+    background-color: #444; /* Slightly lighter background on hover */
+}
+
+.tab.active {
+    background-color: #fff;
+    color: #000;
+}
 /* Play Video Styles */
 .play-content {
     padding-left: 2%;
@@ -342,8 +383,8 @@ nav {
 }
 
 .youtube-card {
-    border: 1px solid #ccc; /* optional border */
-    border-radius: 8px; /* rounded corners */
+    /* border: 1px solid #ccc; optional border */
+    border-radius: 10px; /* rounded corners */
     overflow: hidden; /* ensure images fit within the card */
     cursor: pointer; /* indicate clickable items */
     transition: transform 0.2s; /* smooth hover effect */
