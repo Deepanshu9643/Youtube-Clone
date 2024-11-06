@@ -1775,7 +1775,7 @@ function displayThumbnails(arr) {
         // Add click event to open video page in new tab
         card.addEventListener("click", () => {
             const videoId = t.id.videoId;
-            window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+            window.location.href = `watch.html?videoId=${videoId}`;
         });
 
         videoSection.append(card);
