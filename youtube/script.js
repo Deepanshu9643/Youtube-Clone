@@ -5,6 +5,7 @@ let youtubeSearchForm = document.querySelector('.youtube-search');
 let search_box = document.getElementById('search');
 let search_button = document.getElementById('submit');
 let videoSection = document.querySelector('.video-section');
+let videoPlayer = document.getElementById('videoPlayer');  // Reference to the iframe
 
 // Sidebar toggle functionality
 menuIcon.onclick = function () {
@@ -1775,7 +1776,7 @@ function displayThumbnails(arr) {
         // Add click event to open video page in new tab
         card.addEventListener("click", () => {
             const videoId = t.id.videoId;
-            window.location.href = `watch.html?videoId=${videoId}`;
+            window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
         });
 
         videoSection.append(card);
