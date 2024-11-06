@@ -2,13 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Form | Youtube Cloning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Form | YouTube Cloning</title>
   <link rel="stylesheet" href="style.css">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    .error-message {
+      color: red;
+      display: none; /* Initially hidden */
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="wrapper">
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <p>Loading...</p>
+    </div>
+
     <!-- Login form with input fields and icons -->
     <form class="login-form">
       <h1>Login</h1>
@@ -21,61 +33,85 @@
         <i class='bx bxs-lock-alt'></i>
       </div>
       <div class="remember-forgot">
-        <label><input type="checkbox">Remember Me</label>
+        <label><input type="checkbox"> Remember Me</label>
         <a href="#">Forgot Password</a>
       </div>
       <button type="submit" class="btn">Login</button>
       <div class="register-link">
         <p>Don't have an account? <a href="http://127.0.0.1:5501/signup/signup.html">Register here</a></p>
       </div>
+      <div class="error-message" id="errorMessage"></div> <!-- Error message element -->
     </form>
   </div>
 
   <script>
-    let form = document.querySelector('.login-form');
-    let email_box = document.querySelector('#email');
-    let password_box = document.querySelector('#password');
+    // Select DOM elements
+    const form = document.querySelector('.login-form');
+    const emailBox = document.querySelector('#email');
+    const passwordBox = document.querySelector('#password');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loginButton = document.querySelector('.btn');
+    const errorMessage = document.getElementById('errorMessage');
 
     form.addEventListener('submit', (e) => {
-        e.preventDefault();
+      e.preventDefault(); // Prevent form from submitting normally
 
-        let email = email_box.value;
-        let password = password_box.value;
+      const email = emailBox.value.trim();
+      const password = passwordBox.value.trim();
 
-        if (!email || !password) {
-            alert("All fields are required");
-            return;
+      // Clear previous error message
+      errorMessage.style.display = 'none';
+      errorMessage.textContent = '';
+
+      // Input validation
+      if (!email || !password) {
+        errorMessage.textContent = "All fields are required";
+        errorMessage.style.display = 'block';
+        return;
+      }
+      if (password.length < 6) {
+        errorMessage.textContent = 'Password should be at least 6 characters long';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // Show loading overlay and disable login button after validation
+      loadingOverlay.style.display = 'flex';
+      loginButton.disabled = true;
+
+      // Prepare login data
+      const loginData = { email, password };
+
+      // Send POST request to login API
+      fetch("https://instagram-express-app.vercel.app/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loginData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Hide loading overlay and re-enable login button
+        loadingOverlay.style.display = 'none';
+        loginButton.disabled = false;
+
+        if (data.success) {
+          // Redirect to YouTube clone main page after successful login
+          window.location.href = "http://127.0.0.1:5501/youtube/index.html";
+        } else {
+          errorMessage.textContent = "Invalid Email or Password"; // Inline error message
+          errorMessage.style.display = 'block';
         }
-        if (password.length < 6) {
-            alert('Password should be at least 6 characters long');
-            return;
-        }
-
-        let login_data = {
-            email, 
-            password
-        };
-
-        fetch("https://instagram-express-app.vercel.app/api/auth/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(login_data)
-        })
-        .then(response => response.json())
-        .then((data) => {
-            if (data.success) {
-                alert("Login Successful");
-                // Redirect to dashboard or main page after login
-                window.location.href = "http://127.0.0.1:5501/youtube/index.html";
-            } else {
-                alert("Invalid Email or Password. Redirecting to signup...");
-                // Redirect to signup page if login fails
-                window.location.href = "http://127.0.0.1:5501/signup/signup.html";
-            }
-        })
-        .catch((error) => {console.log(error)});
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        errorMessage.textContent = "An error occurred. Please try again."; // Inline error message
+        errorMessage.style.display = 'block';
+        // Hide loading overlay and re-enable login button on error
+        loadingOverlay.style.display = 'none';
+        loginButton.disabled = false;
+      });
     });
   </script>
 </body>

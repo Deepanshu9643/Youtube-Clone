@@ -47,6 +47,13 @@
         </div>
         <!-- Add more video items as needed -->
     </div>
+     <div class="main-video-section">
+        <div id="main-video"></div> <!-- Main video will be embedded here -->
+    </div>
+    <div class="recommendations">
+        <h3>Recommended Videos</h3>
+        <div id="recommended-videos"></div> <!-- Recommended videos will appear here -->
+    </div>
 
     <script>
         // Load video data from localStorage
@@ -68,7 +75,7 @@
         function loadVideo(videoId) {
             const videoPlayer = document.getElementById('videoPlayer');
             videoPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            // Optionally, you can set the title and description dynamically as well
+            // set the title and description dynamically as well
         }
     </script>
 </body>

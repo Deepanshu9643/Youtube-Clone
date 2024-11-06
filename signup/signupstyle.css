@@ -130,4 +130,16 @@
   .register-link p a:hover {
     text-decoration: underline;
   }
+
+  /* inline message */
+  .message {
+    color: green; /* Color for success messages */
+    display: none; /* Initially hidden */
+    margin-top: 10px;
+  }
+  .error-message {
+    color: red; /* Color for error messages */
+    display: none; /* Initially hidden */
+    margin-top: 10px;
+  }
   

@@ -1770,7 +1770,6 @@ function displayThumbnails(arr) {
         let para = document.createElement('p');
         para.innerText = t.snippet.title;
 
-        // Append elements to card
         card.append(imgTag, para);
 
         // Add click event to open video page in new tab
@@ -1779,7 +1778,6 @@ function displayThumbnails(arr) {
             window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
         });
 
-        // Append video card to video section
         videoSection.append(card);
     });
 }
