@@ -38,81 +38,15 @@
       </div>
       <button type="submit" class="btn">Login</button>
       <div class="register-link">
-        <p>Don't have an account? <a href="http://127.0.0.1:5501/signup/signup.html">Register here</a></p>
+        <p>Don't have an account? <a href="signup/signup.html">Register here</a></p>
       </div>
       <div class="error-message" id="errorMessage"></div> <!-- Error message element -->
     </form>
   </div>
 
-  <script>
-    // Select DOM elements
-    const form = document.querySelector('.login-form');
-    const emailBox = document.querySelector('#email');
-    const passwordBox = document.querySelector('#password');
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    const loginButton = document.querySelector('.btn');
-    const errorMessage = document.getElementById('errorMessage');
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault(); // Prevent form from submitting normally
-
-      const email = emailBox.value.trim();
-      const password = passwordBox.value.trim();
-
-      // Clear previous error message
-      errorMessage.style.display = 'none';
-      errorMessage.textContent = '';
-
-      // Input validation
-      if (!email || !password) {
-        errorMessage.textContent = "All fields are required";
-        errorMessage.style.display = 'block';
-        return;
-      }
-      if (password.length < 6) {
-        errorMessage.textContent = 'Password should be at least 6 characters long';
-        errorMessage.style.display = 'block';
-        return;
-      }
-
-      // Show loading overlay and disable login button after validation
-      loadingOverlay.style.display = 'flex';
-      loginButton.disabled = true;
-
-      // Prepare login data
-      const loginData = { email, password };
-
-      // Send POST request to login API
-      fetch("https://instagram-express-app.vercel.app/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(loginData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Hide loading overlay and re-enable login button
-        loadingOverlay.style.display = 'none';
-        loginButton.disabled = false;
-
-        if (data.success) {
-          // Redirect to YouTube clone main page after successful login
-          window.location.href = "http://127.0.0.1:5501/youtube/index.html";
-        } else {
-          errorMessage.textContent = "Invalid Email or Password"; // Inline error message
-          errorMessage.style.display = 'block';
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        errorMessage.textContent = "An error occurred. Please try again."; // Inline error message
-        errorMessage.style.display = 'block';
-        // Hide loading overlay and re-enable login button on error
-        loadingOverlay.style.display = 'none';
-        loginButton.disabled = false;
-      });
-    });
-  </script>
+  <script  type="module" src="login.js"></script>
+  
+  
 </body>
 </html>
